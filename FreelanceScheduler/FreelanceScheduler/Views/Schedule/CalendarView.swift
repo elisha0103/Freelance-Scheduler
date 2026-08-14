@@ -50,20 +50,26 @@ struct CalendarView: View {
                 let firstWeekday = Date.firstWeekdayOfMonth(year: scheduleVM.currentYear, month: scheduleVM.currentMonth)
                 let daysInMonth = Date.daysInMonth(year: scheduleVM.currentYear, month: scheduleVM.currentMonth)
 
-                ForEach(0..<(firstWeekday - 1), id: \.self) { _ in
-                    Color.clear.frame(height: 80)
-                }
+                let totalCells = (firstWeekday - 1) + daysInMonth
 
-                ForEach(1...daysInMonth, id: \.self) { day in
-                    let date = makeDate(day: day)
-                    NavigationLink(value: date) {
-                        DayCell(
-                            day: day, date: date,
-                            schedules: scheduleVM.schedules(for: date),
-                            accountBooks: accountBookVM.accountBooks(for: date)
-                        )
+                ForEach(0..<totalCells, id: \.self) { index in
+                    if index < firstWeekday - 1 {
+                        Color.clear
+                            .frame(height: 80)
+                    } else {
+                        let day = index - (firstWeekday - 1) + 1
+                        let date = makeDate(day: day)
+
+                        NavigationLink(value: date) {
+                            DayCell(
+                                day: day,
+                                date: date,
+                                schedules: scheduleVM.schedules(for: date),
+                                accountBooks: accountBookVM.accountBooks(for: date)
+                            )
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
             }
             .navigationDestination(for: Date.self) { date in

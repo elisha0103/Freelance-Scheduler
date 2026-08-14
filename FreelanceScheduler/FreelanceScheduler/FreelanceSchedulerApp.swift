@@ -10,9 +10,7 @@ struct FreelanceSchedulerApp: App {
         WindowGroup {
             RootView()
                 .environment(authViewModel)
-                .onTapGesture {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                }
+                .onAppear { KeyboardDismissHelper.setup() }
                 .onOpenURL { url in
                     if AuthApi.isKakaoTalkLoginUrl(url) {
                         _ = AuthController.handleOpenUrl(url: url)

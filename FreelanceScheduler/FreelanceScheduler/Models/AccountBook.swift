@@ -51,6 +51,7 @@ struct AccountBook: Codable, Identifiable, Hashable {
     var netAmount: Int?
     var memo: String?
     var expenseCategory: ExpenseCategory?
+    var linkedScheduleId: String?
     var authorId: String
     var groupId: String
     var createdAt: Date
@@ -67,6 +68,7 @@ struct AccountBook: Codable, Identifiable, Hashable {
         netAmount: Int? = nil,
         memo: String? = nil,
         expenseCategory: ExpenseCategory? = nil,
+        linkedScheduleId: String? = nil,
         authorId: String,
         groupId: String,
         createdAt: Date = Date()
@@ -82,6 +84,7 @@ struct AccountBook: Codable, Identifiable, Hashable {
         self.netAmount = netAmount
         self.memo = memo
         self.expenseCategory = expenseCategory
+        self.linkedScheduleId = linkedScheduleId
         self.authorId = authorId
         self.groupId = groupId
         self.createdAt = createdAt

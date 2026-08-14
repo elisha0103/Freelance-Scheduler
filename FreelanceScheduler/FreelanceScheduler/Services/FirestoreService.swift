@@ -115,6 +115,10 @@ final class FirestoreService {
         try await db.collection("schedules").document(id).delete()
     }
 
+    func updateSchedulePaidStatus(id: String, isPaid: Bool) async throws {
+        try await db.collection("schedules").document(id).updateData(["isPaid": isPaid])
+    }
+
     // MARK: - AccountBook
 
     func saveAccountBook(_ item: AccountBook) async throws {

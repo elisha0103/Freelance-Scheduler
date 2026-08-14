@@ -18,6 +18,7 @@ struct AccountBookFormView: View {
 
     @Environment(AuthViewModel.self) var authViewModel
     @Environment(AccountBookViewModel.self) var accountBookVM
+    @Environment(ScheduleViewModel.self) var scheduleVM
     @Environment(\.dismiss) private var dismiss
 
     @State private var title = ""
@@ -29,14 +30,25 @@ struct AccountBookFormView: View {
     @State private var customTaxRateText = ""
     @State private var memo = ""
     @State private var expenseCategory: ExpenseCategory = .other
+    @State private var linkedScheduleId: String?
     @State private var showValidationError = false
     @State private var showDeleteAlert = false
 
     private var isEditing: Bool { if case .edit = mode { return true }; return false }
-    private var amount: Int { Int(amountText) ?? 0 }
+    private var rawAmount: Int { Int(amountText.replacingOccurrences(of: ",", with: "")) ?? 0 }
+    private var amount: Int { rawAmount }
     private var taxRate: Double { useDefaultTax ? 3.3 : (Double(customTaxRateText) ?? 0) }
     private var taxAmount: Int { guard hasTax, type == .income else { return 0 }; return Int(Double(amount) * taxRate / 100) }
     private var netAmount: Int { guard hasTax, type == .income else { return amount }; return amount - taxAmount }
+
+    private func formatAmountText() {
+        let digits = amountText.replacingOccurrences(of: ",", with: "").filter(\.isNumber)
+        guard let number = Int(digits), number > 0 else {
+            amountText = digits
+            return
+        }
+        amountText = number.formatted()
+    }
 
     var body: some View {
         NavigationStack {
@@ -57,6 +69,7 @@ struct AccountBookFormView: View {
                         ForEach(IncomeExpense.allCases, id: \.self) { Text($0.rawValue).tag($0) }
                     }.pickerStyle(.segmented)
                     TextField("금액 (필수)", text: $amountText).keyboardType(.numberPad)
+                        .onChange(of: amountText) { formatAmountText() }
                         .overlay(alignment: .trailing) {
                             if showValidationError && amountText.isEmpty {
                                 Image(systemName: "exclamationmark.circle.fill").foregroundStyle(.red)
@@ -95,6 +108,23 @@ struct AccountBookFormView: View {
                         }
                     }
                 }
+                if type == .income {
+                    Section("관련 마감 일정") {
+                        let unpaidDeadlines = scheduleVM.schedules.filter { $0.category == .deadline && !$0.isPaid }
+                        if unpaidDeadlines.isEmpty {
+                            Text("미입금 마감 일정이 없습니다")
+                                .font(.subheadline).foregroundStyle(.secondary)
+                        } else {
+                            Picker("마감 일정 연결", selection: $linkedScheduleId) {
+                                Text("선택 안 함").tag(nil as String?)
+                                ForEach(unpaidDeadlines) { schedule in
+                                    Text("\(schedule.title) (\(schedule.startDate.formattedDate))")
+                                        .tag(schedule.id as String?)
+                                }
+                            }
+                        }
+                    }
+                }
                 Section("메모") {
                     TextEditor(text: $memo).frame(minHeight: 80)
                         .onChange(of: memo) { if memo.count > 200 { memo = String(memo.prefix(200)) } }
@@ -119,16 +149,17 @@ struct AccountBookFormView: View {
 
     private func loadEditData() {
         if case .edit(let item) = mode {
-            title = item.title; date = item.date; type = item.type; amountText = String(item.amount)
+            title = item.title; date = item.date; type = item.type; amountText = item.amount.formatted()
             hasTax = item.hasTax
             if let rate = item.taxRate { if rate == 3.3 { useDefaultTax = true } else { useDefaultTax = false; customTaxRateText = String(rate) } }
             memo = item.memo ?? ""
             if let cat = item.expenseCategory { expenseCategory = cat }
+            linkedScheduleId = item.linkedScheduleId
         } else if let initialDate { date = initialDate }
     }
 
     private func save() async {
-        guard !title.isEmpty, !amountText.isEmpty, amount > 0 else { showValidationError = true; return }
+        guard !title.isEmpty, rawAmount > 0 else { showValidationError = true; return }
         guard let user = authViewModel.currentUser, let groupId = user.groupId else { return }
         let existingId: String
         if case .edit(let item) = mode { existingId = item.id } else { existingId = UUID().uuidString }
@@ -139,9 +170,18 @@ struct AccountBookFormView: View {
             netAmount: hasTax && type == .income ? netAmount : nil,
             memo: memo.isEmpty ? nil : memo,
             expenseCategory: type == .expense ? expenseCategory : nil,
+            linkedScheduleId: type == .income ? linkedScheduleId : nil,
             authorId: user.id, groupId: groupId
         )
-        await accountBookVM.saveAccountBook(item); HapticManager.success(); await onSave?(); dismiss()
+        await accountBookVM.saveAccountBook(item)
+        // 연결된 마감 일정 자동 입금 처리
+        if let scheduleId = linkedScheduleId, type == .income {
+            try? await FirestoreService.shared.updateSchedulePaidStatus(id: scheduleId, isPaid: true)
+            if let index = scheduleVM.schedules.firstIndex(where: { $0.id == scheduleId }) {
+                scheduleVM.schedules[index].isPaid = true
+            }
+        }
+        HapticManager.success(); await onSave?(); dismiss()
     }
 
     private func deleteAndDismiss() async {

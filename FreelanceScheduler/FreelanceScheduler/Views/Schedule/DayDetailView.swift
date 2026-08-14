@@ -10,6 +10,7 @@ struct DayDetailView: View {
     @State private var showAddPopover = false
     @State private var showScheduleForm = false
     @State private var showAccountBookForm = false
+    @State private var selectedAccountBook: AccountBookFormMode?
 
     private var daySchedules: [Schedule] { scheduleVM.schedules(for: date) }
     private var dayAccountBooks: [AccountBook] { accountBookVM.accountBooks(for: date) }
@@ -32,12 +33,20 @@ struct DayDetailView: View {
                     Text("등록된 가계부가 없습니다").font(.subheadline).foregroundStyle(.secondary)
                 } else {
                     ForEach(dayAccountBooks) { item in
-                        HStack {
-                            Text(item.title).font(.subheadline)
-                            Spacer()
-                            Text("\(item.type == .income ? "+" : "-")\(item.amount.formatted())원")
-                                .font(.subheadline).fontWeight(.medium).foregroundStyle(item.type.color)
+                        Button {
+                            selectedAccountBook = .edit(item)
+                        } label: {
+                            HStack {
+                                Text(item.title).font(.subheadline)
+                                Spacer()
+                                Text("\(item.type == .income ? "+" : "-")\(item.amount.formatted())원")
+                                    .font(.subheadline).fontWeight(.medium).foregroundStyle(item.type.color)
+                                Image(systemName: "chevron.right")
+                                    .font(.caption2).foregroundStyle(.secondary)
+                            }
+                            .contentShape(Rectangle())
                         }
+                        .buttonStyle(.plain)
                     }
                 }
             }
@@ -70,6 +79,9 @@ struct DayDetailView: View {
         }
         .fullScreenCover(isPresented: $showAccountBookForm) {
             AccountBookFormView(mode: .create, initialDate: date) { await reloadAccountBooks() }
+        }
+        .fullScreenCover(item: $selectedAccountBook) { formMode in
+            AccountBookFormView(mode: formMode) { await reloadAccountBooks() }
         }
     }
 

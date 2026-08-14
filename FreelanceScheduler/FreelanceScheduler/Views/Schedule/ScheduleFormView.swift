@@ -1,5 +1,4 @@
 import SwiftUI
-import MapKit
 
 enum ScheduleFormMode {
     case create
@@ -26,7 +25,13 @@ struct ScheduleFormView: View {
     @State private var latitude: Double?
     @State private var longitude: Double?
     @State private var amountText = ""
+    private var parsedAmount: Int? {
+        let digits = amountText.replacingOccurrences(of: ",", with: "")
+        return digits.isEmpty ? nil : Int(digits)
+    }
     @State private var selectedCompanions: Set<String> = []
+    @State private var customCompanions: [String] = []
+    @State private var customCompanionText = ""
     @State private var descriptionText = ""
     @State private var hasReminder = false
     @State private var reminderMinutes = 30
@@ -39,6 +44,15 @@ struct ScheduleFormView: View {
     private var isEditing: Bool {
         if case .edit = mode { return true }
         return false
+    }
+
+    private func formatAmountText() {
+        let digits = amountText.replacingOccurrences(of: ",", with: "").filter(\.isNumber)
+        guard let number = Int(digits), number > 0 else {
+            amountText = digits
+            return
+        }
+        amountText = number.formatted()
     }
 
     var body: some View {
@@ -98,15 +112,10 @@ struct ScheduleFormView: View {
                         Button("검색") { showPlaceSearch = true }.font(.subheadline)
                     }
                     if let lat = latitude, let lng = longitude {
-                        Map(initialPosition: .region(MKCoordinateRegion(
-                            center: CLLocationCoordinate2D(latitude: lat, longitude: lng),
-                            span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
-                        ))) {
-                            Marker(address, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng))
-                        }
-                        .frame(height: 150)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+                        NaverMapPreview(latitude: lat, longitude: lng, markerTitle: address)
+                            .frame(height: 150)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
 
                         Button {
                             let name = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
@@ -125,14 +134,11 @@ struct ScheduleFormView: View {
                 }
                 Section("금액") {
                     TextField("금액 (선택)", text: $amountText).keyboardType(.numberPad)
+                        .onChange(of: amountText) { formatAmountText() }
                 }
                 Section("동행인") {
                     let otherMembers = groupVM.members.filter { $0.id != authViewModel.currentUser?.id }
-                    if otherMembers.isEmpty {
-                        Text("그룹에 다른 멤버가 없습니다")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    } else {
+                    if !otherMembers.isEmpty {
                         ForEach(otherMembers) { member in
                             HStack {
                                 Text(member.nickname)
@@ -145,6 +151,40 @@ struct ScheduleFormView: View {
                             .onTapGesture {
                                 if selectedCompanions.contains(member.id) { selectedCompanions.remove(member.id) }
                                 else { selectedCompanions.insert(member.id) }
+                            }
+                        }
+                    }
+                    HStack {
+                        TextField("이름 직접 입력", text: $customCompanionText)
+                            .font(.subheadline)
+                        Button {
+                            let name = customCompanionText.trimmingCharacters(in: .whitespaces)
+                            guard !name.isEmpty, !customCompanions.contains(name) else { return }
+                            customCompanions.append(name)
+                            customCompanionText = ""
+                        } label: {
+                            Image(systemName: "plus.circle.fill").foregroundStyle(.blue)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(customCompanionText.trimmingCharacters(in: .whitespaces).isEmpty)
+                    }
+                    if !customCompanions.isEmpty {
+                        FlowLayout(spacing: 6) {
+                            ForEach(customCompanions, id: \.self) { name in
+                                HStack(spacing: 4) {
+                                    Text(name).font(.caption)
+                                    Button {
+                                        customCompanions.removeAll { $0 == name }
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .font(.caption2).foregroundStyle(.secondary)
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.blue.opacity(0.1))
+                                .clipShape(Capsule())
                             }
                         }
                     }
@@ -189,8 +229,11 @@ struct ScheduleFormView: View {
             startDate = schedule.startDate; hasDeadline = schedule.deadline != nil
             deadline = schedule.deadline ?? Date(); address = schedule.address ?? ""
             latitude = schedule.latitude; longitude = schedule.longitude
-            amountText = schedule.amount.map { String($0) } ?? ""
-            selectedCompanions = Set(schedule.companions); descriptionText = schedule.description ?? ""
+            amountText = schedule.amount.map { $0.formatted() } ?? ""
+            let memberIds = Set(groupVM.members.map(\.id))
+            selectedCompanions = Set(schedule.companions.filter { memberIds.contains($0) })
+            customCompanions = schedule.companions.filter { !memberIds.contains($0) }
+            descriptionText = schedule.description ?? ""
             if let rm = schedule.reminderMinutes { hasReminder = true; reminderMinutes = rm }
         } else if let initialDate { startDate = initialDate }
     }
@@ -206,7 +249,7 @@ struct ScheduleFormView: View {
             id: existingId, title: title, category: category, isGroupSchedule: isGroupSchedule,
             startDate: startDate, deadline: hasDeadline ? deadline : nil,
             address: address.isEmpty ? nil : address, latitude: latitude, longitude: longitude,
-            amount: Int(amountText), companions: Array(selectedCompanions),
+            amount: parsedAmount, companions: Array(selectedCompanions) + customCompanions,
             description: descriptionText.isEmpty ? nil : descriptionText,
             reminderMinutes: hasReminder ? reminderMinutes : nil,
             repeatRule: repeatRule != .none ? repeatRule : nil,
@@ -246,7 +289,7 @@ struct ScheduleFormView: View {
                 title: title, category: category, isGroupSchedule: isGroupSchedule,
                 startDate: nextDate, deadline: nextDeadline,
                 address: address.isEmpty ? nil : address, latitude: latitude, longitude: longitude,
-                amount: Int(amountText), companions: Array(selectedCompanions),
+                amount: parsedAmount, companions: Array(selectedCompanions) + customCompanions,
                 description: descriptionText.isEmpty ? nil : descriptionText,
                 reminderMinutes: hasReminder ? reminderMinutes : nil,
                 repeatRule: repeatRule, repeatEndDate: repeatEndDate, repeatGroupId: repeatGroupId,

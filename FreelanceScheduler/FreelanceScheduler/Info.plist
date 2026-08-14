@@ -19,7 +19,10 @@
 		<string>kakaolink</string>
 		<string>kakaoplus</string>
 		<string>kakaotalk</string>
+		<string>nmap</string>
 	</array>
+	<key>NMFNcpKeyId</key>
+	<string>f0r6x23j8n</string>
 	<key>KAKAO_APP_KEY</key>
 	<string>0899d6d85209a127b97ea24f89fedb63</string>
 </dict>

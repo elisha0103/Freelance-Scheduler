@@ -1,5 +1,4 @@
 import SwiftUI
-import MapKit
 
 struct ScheduleDetailView: View {
     @State private var schedule: Schedule
@@ -38,16 +37,11 @@ struct ScheduleDetailView: View {
                 Section("장소") {
                     Text(address).font(.subheadline)
 
-                    // 지도 프리뷰
+                    // 네이버 지도 프리뷰
                     if let lat = schedule.latitude, let lng = schedule.longitude {
-                        Map(initialPosition: .region(MKCoordinateRegion(
-                            center: CLLocationCoordinate2D(latitude: lat, longitude: lng),
-                            span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
-                        ))) {
-                            Marker(schedule.title, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng))
-                        }
-                        .frame(height: 160)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        NaverMapPreview(latitude: lat, longitude: lng, markerTitle: schedule.title)
+                            .frame(height: 160)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                         .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
                     }
 
@@ -69,10 +63,31 @@ struct ScheduleDetailView: View {
             if let amount = schedule.amount {
                 Section { LabeledContent("금액", value: "\(amount.formatted())원") }
             }
+            if schedule.category == .deadline {
+                Section("입금 확인") {
+                    Button {
+                        Task { await togglePaidStatus() }
+                    } label: {
+                        HStack {
+                            Image(systemName: schedule.isPaid ? "checkmark.circle.fill" : "circle")
+                                .foregroundStyle(schedule.isPaid ? .green : .secondary)
+                                .font(.title3)
+                            Text(schedule.isPaid ? "입금 완료" : "미입금")
+                                .font(.subheadline)
+                                .foregroundStyle(schedule.isPaid ? .green : .secondary)
+                            Spacer()
+                            if schedule.isPaid {
+                                Text("탭하여 해제").font(.caption2).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
             if !schedule.companions.isEmpty {
                 Section("동행인") {
-                    ForEach(schedule.companions, id: \.self) { id in
-                        let name = groupVM.members.first(where: { $0.id == id })?.nickname ?? id
+                    ForEach(schedule.companions, id: \.self) { companion in
+                        let name = groupVM.members.first(where: { $0.id == companion })?.nickname ?? companion
                         Text(name).font(.subheadline)
                     }
                 }
@@ -115,6 +130,20 @@ struct ScheduleDetailView: View {
     private func refreshSchedule() {
         if let updated = scheduleVM.schedules.first(where: { $0.id == schedule.id }) {
             schedule = updated
+        }
+    }
+
+    private func togglePaidStatus() async {
+        let newStatus = !schedule.isPaid
+        do {
+            try await FirestoreService.shared.updateSchedulePaidStatus(id: schedule.id, isPaid: newStatus)
+            schedule.isPaid = newStatus
+            if let index = scheduleVM.schedules.firstIndex(where: { $0.id == schedule.id }) {
+                scheduleVM.schedules[index].isPaid = newStatus
+            }
+            HapticManager.success()
+        } catch {
+            print("⚠️ [Error] isPaid 업데이트 실패: \(error.localizedDescription)")
         }
     }
 

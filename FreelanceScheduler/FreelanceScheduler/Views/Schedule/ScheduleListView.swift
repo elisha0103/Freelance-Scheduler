@@ -14,13 +14,13 @@ struct ScheduleListView: View {
                         ForEach(scheduleVM.datesWithSchedules, id: \.self) { date in
                             Section {
                                 ForEach(scheduleVM.schedules(for: date)) { schedule in
-                                    NavigationLink(value: schedule) {
-                                        ScheduleRow(schedule: schedule, date: date)
-                                    }
-                                    .swipeActions(edge: .trailing) {
-                                        Button(role: .destructive) {
-                                            Task { await scheduleVM.deleteSchedule(schedule) }
-                                        } label: { Label("삭제", systemImage: "trash") }
+                                    NavigationLink {
+                                        ScheduleDetailView(schedule: schedule)
+                                    } label: {
+                                        ScheduleRow(
+                                            schedule: schedule,
+                                            date: date
+                                        )
                                     }
                                 }
                             } header: {
@@ -40,9 +40,9 @@ struct ScheduleListView: View {
                     Button("닫기") { dismiss() }
                 }
             }
-            .navigationDestination(for: Schedule.self) { schedule in
-                ScheduleDetailView(schedule: schedule)
-            }
+//            .navigationDestination(for: Schedule.self) { schedule in
+//                ScheduleDetailView(schedule: schedule)
+//            }
         }
     }
 }

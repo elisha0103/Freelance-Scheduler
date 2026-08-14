@@ -50,6 +50,7 @@ struct Schedule: Codable, Identifiable, Hashable {
     var repeatRule: RepeatRule?
     var repeatEndDate: Date?
     var repeatGroupId: String?
+    var isPaid: Bool
     var authorId: String
     var groupId: String
     var createdAt: Date
@@ -71,6 +72,7 @@ struct Schedule: Codable, Identifiable, Hashable {
         repeatRule: RepeatRule? = nil,
         repeatEndDate: Date? = nil,
         repeatGroupId: String? = nil,
+        isPaid: Bool = false,
         authorId: String,
         groupId: String,
         createdAt: Date = Date()
@@ -91,6 +93,7 @@ struct Schedule: Codable, Identifiable, Hashable {
         self.repeatRule = repeatRule
         self.repeatEndDate = repeatEndDate
         self.repeatGroupId = repeatGroupId
+        self.isPaid = isPaid
         self.authorId = authorId
         self.groupId = groupId
         self.createdAt = createdAt
