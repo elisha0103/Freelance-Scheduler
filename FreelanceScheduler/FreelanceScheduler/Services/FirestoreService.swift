@@ -84,49 +84,31 @@ final class FirestoreService {
             return []
         }
 
-        // 그룹 일정
+        // groupId 기준으로 모든 일정 조회 (복합 인덱스 불필요)
         let groupSnapshot = try await db.collection("schedules")
             .whereField("groupId", isEqualTo: groupId)
-            .whereField("isGroupSchedule", isEqualTo: true)
-            .whereField("startDate", isGreaterThanOrEqualTo: Timestamp(date: startDate))
-            .whereField("startDate", isLessThan: Timestamp(date: endDate))
             .getDocuments()
 
-        // 개인 일정
+        // 개인 일정 (isGroupSchedule=false인 것 중 authorId 매칭)
         let personalSnapshot = try await db.collection("schedules")
             .whereField("authorId", isEqualTo: authorId)
-            .whereField("isGroupSchedule", isEqualTo: false)
-            .whereField("startDate", isGreaterThanOrEqualTo: Timestamp(date: startDate))
-            .whereField("startDate", isLessThan: Timestamp(date: endDate))
             .getDocuments()
 
-        var schedules: [Schedule] = []
-        schedules.append(contentsOf: groupSnapshot.documents.compactMap { try? $0.data(as: Schedule.self) })
-        schedules.append(contentsOf: personalSnapshot.documents.compactMap { try? $0.data(as: Schedule.self) })
+        var allSchedules: [Schedule] = []
+        allSchedules.append(contentsOf: groupSnapshot.documents.compactMap { try? $0.data(as: Schedule.self) })
 
-        // 마감일이 이 달에 해당하는 일정도 추가 조회
-        let deadlineGroupSnapshot = try await db.collection("schedules")
-            .whereField("groupId", isEqualTo: groupId)
-            .whereField("isGroupSchedule", isEqualTo: true)
-            .whereField("deadline", isGreaterThanOrEqualTo: Timestamp(date: startDate))
-            .whereField("deadline", isLessThan: Timestamp(date: endDate))
-            .getDocuments()
-
-        let deadlinePersonalSnapshot = try await db.collection("schedules")
-            .whereField("authorId", isEqualTo: authorId)
-            .whereField("isGroupSchedule", isEqualTo: false)
-            .whereField("deadline", isGreaterThanOrEqualTo: Timestamp(date: startDate))
-            .whereField("deadline", isLessThan: Timestamp(date: endDate))
-            .getDocuments()
-
-        let deadlineSchedules = deadlineGroupSnapshot.documents.compactMap { try? $0.data(as: Schedule.self) }
-            + deadlinePersonalSnapshot.documents.compactMap { try? $0.data(as: Schedule.self) }
-
-        for schedule in deadlineSchedules where !schedules.contains(where: { $0.id == schedule.id }) {
-            schedules.append(schedule)
+        // 개인 일정 중 그룹 일정이 아닌 것만 추가 (중복 방지)
+        let personalSchedules = personalSnapshot.documents.compactMap { try? $0.data(as: Schedule.self) }
+        for schedule in personalSchedules where !schedule.isGroupSchedule && !allSchedules.contains(where: { $0.id == schedule.id }) {
+            allSchedules.append(schedule)
         }
 
-        return schedules
+        // 클라이언트에서 월 필터링
+        return allSchedules.filter { schedule in
+            let startInMonth = schedule.startDate >= startDate && schedule.startDate < endDate
+            let deadlineInMonth = schedule.deadline.map { $0 >= startDate && $0 < endDate } ?? false
+            return startInMonth || deadlineInMonth
+        }
     }
 
     func deleteSchedule(id: String) async throws {

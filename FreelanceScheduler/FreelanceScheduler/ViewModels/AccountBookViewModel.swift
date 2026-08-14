@@ -4,6 +4,7 @@ import Observation
 enum ErrorMessageHelper {
     static func userFriendlyMessage(_ error: Error) -> String {
         let desc = error.localizedDescription
+        print("⚠️ [Error] \(desc)")
         if desc.contains("index") || desc.contains("requires an index") {
             return "데이터 조회 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
         } else if desc.contains("permission") || desc.contains("Permission") {
