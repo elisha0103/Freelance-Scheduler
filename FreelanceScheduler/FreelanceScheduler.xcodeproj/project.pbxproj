@@ -22,6 +22,9 @@
 		666F1F38302EA61100BA95DB /* KakaoSDKFriendCore in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F37302EA61100BA95DB /* KakaoSDKFriendCore */; };
 		666F1F3A302EA61100BA95DB /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F39302EA61100BA95DB /* KakaoSDKShare */; };
 		666F1F3C302EA61100BA95DB /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F3B302EA61100BA95DB /* KakaoSDKTalk */; };
+		666F1F50302EC78A00BA95DB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 666F1F4F302EC78A00BA95DB /* WidgetKit.framework */; };
+		666F1F52302EC78A00BA95DB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 666F1F51302EC78A00BA95DB /* SwiftUI.framework */; };
+		666F1F5F302EC78B00BA95DB /* FreelanceSchedulerWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 666F1F4D302EC78A00BA95DB /* FreelanceSchedulerWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,12 +42,37 @@
 			remoteGlobalIDString = 666F1D8B302DD7A900BA95DB;
 			remoteInfo = FreelanceScheduler;
 		};
+		666F1F5D302EC78B00BA95DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 666F1D84302DD7A900BA95DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 666F1F4C302EC78A00BA95DB;
+			remoteInfo = FreelanceSchedulerWidgetExtensionExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		666F1F64302EC78B00BA95DB /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				666F1F5F302EC78B00BA95DB /* FreelanceSchedulerWidgetExtensionExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		666F1D8C302DD7A900BA95DB /* FreelanceScheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreelanceScheduler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		666F1D9B302DD7AA00BA95DB /* FreelanceSchedulerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreelanceSchedulerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		666F1DA5302DD7AA00BA95DB /* FreelanceSchedulerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreelanceSchedulerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		666F1F4D302EC78A00BA95DB /* FreelanceSchedulerWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FreelanceSchedulerWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		666F1F4F302EC78A00BA95DB /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		666F1F51302EC78A00BA95DB /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		666F1F69302EC87C00BA95DB /* FreelanceSchedulerWidgetExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FreelanceSchedulerWidgetExtensionExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -54,6 +82,13 @@
 				Info.plist,
 			);
 			target = 666F1D8B302DD7A900BA95DB /* FreelanceScheduler */;
+		};
+		666F1F63302EC78B00BA95DB /* Exceptions for "FreelanceSchedulerWidgetExtension" folder in "FreelanceSchedulerWidgetExtensionExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 666F1F4C302EC78A00BA95DB /* FreelanceSchedulerWidgetExtensionExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -74,6 +109,14 @@
 		666F1DA8302DD7AA00BA95DB /* FreelanceSchedulerUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FreelanceSchedulerUITests;
+			sourceTree = "<group>";
+		};
+		666F1F53302EC78A00BA95DB /* FreelanceSchedulerWidgetExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				666F1F63302EC78B00BA95DB /* Exceptions for "FreelanceSchedulerWidgetExtension" folder in "FreelanceSchedulerWidgetExtensionExtension" target */,
+			);
+			path = FreelanceSchedulerWidgetExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -115,15 +158,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		666F1F4A302EC78A00BA95DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				666F1F52302EC78A00BA95DB /* SwiftUI.framework in Frameworks */,
+				666F1F50302EC78A00BA95DB /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		666F1D83302DD7A900BA95DB = {
 			isa = PBXGroup;
 			children = (
+				666F1F69302EC87C00BA95DB /* FreelanceSchedulerWidgetExtensionExtension.entitlements */,
 				666F1D8E302DD7A900BA95DB /* FreelanceScheduler */,
 				666F1D9E302DD7AA00BA95DB /* FreelanceSchedulerTests */,
 				666F1DA8302DD7AA00BA95DB /* FreelanceSchedulerUITests */,
+				666F1F53302EC78A00BA95DB /* FreelanceSchedulerWidgetExtension */,
+				666F1F4E302EC78A00BA95DB /* Frameworks */,
 				666F1D8D302DD7A900BA95DB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,8 +189,18 @@
 				666F1D8C302DD7A900BA95DB /* FreelanceScheduler.app */,
 				666F1D9B302DD7AA00BA95DB /* FreelanceSchedulerTests.xctest */,
 				666F1DA5302DD7AA00BA95DB /* FreelanceSchedulerUITests.xctest */,
+				666F1F4D302EC78A00BA95DB /* FreelanceSchedulerWidgetExtensionExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		666F1F4E302EC78A00BA95DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				666F1F4F302EC78A00BA95DB /* WidgetKit.framework */,
+				666F1F51302EC78A00BA95DB /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,10 +213,12 @@
 				666F1D88302DD7A900BA95DB /* Sources */,
 				666F1D89302DD7A900BA95DB /* Frameworks */,
 				666F1D8A302DD7A900BA95DB /* Resources */,
+				666F1F64302EC78B00BA95DB /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				666F1F5E302EC78B00BA95DB /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				666F1D8E302DD7A900BA95DB /* FreelanceScheduler */,
@@ -224,6 +291,28 @@
 			productReference = 666F1DA5302DD7AA00BA95DB /* FreelanceSchedulerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		666F1F4C302EC78A00BA95DB /* FreelanceSchedulerWidgetExtensionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 666F1F60302EC78B00BA95DB /* Build configuration list for PBXNativeTarget "FreelanceSchedulerWidgetExtensionExtension" */;
+			buildPhases = (
+				666F1F49302EC78A00BA95DB /* Sources */,
+				666F1F4A302EC78A00BA95DB /* Frameworks */,
+				666F1F4B302EC78A00BA95DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				666F1F53302EC78A00BA95DB /* FreelanceSchedulerWidgetExtension */,
+			);
+			name = FreelanceSchedulerWidgetExtensionExtension;
+			packageProductDependencies = (
+			);
+			productName = FreelanceSchedulerWidgetExtensionExtension;
+			productReference = 666F1F4D302EC78A00BA95DB /* FreelanceSchedulerWidgetExtensionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -244,6 +333,10 @@
 					666F1DA4302DD7AA00BA95DB = {
 						CreatedOnToolsVersion = 26.0.1;
 						TestTargetID = 666F1D8B302DD7A900BA95DB;
+					};
+					666F1F4C302EC78A00BA95DB = {
+						CreatedOnToolsVersion = 26.0.1;
+						LastSwiftMigration = 2600;
 					};
 				};
 			};
@@ -269,6 +362,7 @@
 				666F1D8B302DD7A900BA95DB /* FreelanceScheduler */,
 				666F1D9A302DD7AA00BA95DB /* FreelanceSchedulerTests */,
 				666F1DA4302DD7AA00BA95DB /* FreelanceSchedulerUITests */,
+				666F1F4C302EC78A00BA95DB /* FreelanceSchedulerWidgetExtensionExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -289,6 +383,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		666F1DA3302DD7AA00BA95DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		666F1F4B302EC78A00BA95DB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -319,6 +420,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		666F1F49302EC78A00BA95DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -331,6 +439,11 @@
 			isa = PBXTargetDependency;
 			target = 666F1D8B302DD7A900BA95DB /* FreelanceScheduler */;
 			targetProxy = 666F1DA6302DD7AA00BA95DB /* PBXContainerItemProxy */;
+		};
+		666F1F5E302EC78B00BA95DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 666F1F4C302EC78A00BA95DB /* FreelanceSchedulerWidgetExtensionExtension */;
+			targetProxy = 666F1F5D302EC78B00BA95DB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -461,6 +574,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FreelanceScheduler/FreelanceScheduler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RF42434X35;
@@ -494,6 +608,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FreelanceScheduler/FreelanceScheduler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RF42434X35;
@@ -606,6 +721,75 @@
 			};
 			name = Release;
 		};
+		666F1F61302EC78B00BA95DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FreelanceSchedulerWidgetExtensionExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RF42434X35;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FreelanceSchedulerWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FreelanceSchedulerWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TaeYoungJin.FreelanceScheduler.FreelanceSchedulerWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "FreelanceSchedulerWidgetExtension/FreelanceSchedulerWidgetExtensionExtension-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		666F1F62302EC78B00BA95DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FreelanceSchedulerWidgetExtensionExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RF42434X35;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FreelanceSchedulerWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FreelanceSchedulerWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TaeYoungJin.FreelanceScheduler.FreelanceSchedulerWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "FreelanceSchedulerWidgetExtension/FreelanceSchedulerWidgetExtensionExtension-Bridging-Header.h";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -641,6 +825,15 @@
 			buildConfigurations = (
 				666F1DB6302DD7AA00BA95DB /* Debug */,
 				666F1DB7302DD7AA00BA95DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		666F1F60302EC78B00BA95DB /* Build configuration list for PBXNativeTarget "FreelanceSchedulerWidgetExtensionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				666F1F61302EC78B00BA95DB /* Debug */,
+				666F1F62302EC78B00BA95DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

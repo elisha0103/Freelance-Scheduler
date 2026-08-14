@@ -2,7 +2,7 @@ import SwiftUI
 import MapKit
 
 struct ScheduleDetailView: View {
-    let schedule: Schedule
+    @State private var schedule: Schedule
 
     @Environment(AuthViewModel.self) var authViewModel
     @Environment(ScheduleViewModel.self) var scheduleVM
@@ -11,6 +11,10 @@ struct ScheduleDetailView: View {
 
     @State private var showEditForm = false
     @State private var showDeleteAlert = false
+
+    init(schedule: Schedule) {
+        _schedule = State(initialValue: schedule)
+    }
 
     var body: some View {
         List {
@@ -92,7 +96,10 @@ struct ScheduleDetailView: View {
             }
         }
         .fullScreenCover(isPresented: $showEditForm) {
-            ScheduleFormView(mode: .edit(schedule)) { await reloadSchedules() }
+            ScheduleFormView(mode: .edit(schedule)) {
+                await reloadSchedules()
+                refreshSchedule()
+            }
         }
         .alert("일정 삭제", isPresented: $showDeleteAlert) {
             Button("삭제", role: .destructive) {
@@ -100,6 +107,15 @@ struct ScheduleDetailView: View {
             }
             Button("취소", role: .cancel) {}
         } message: { Text("이 일정을 삭제하시겠습니까?") }
+        .onAppear {
+            refreshSchedule()
+        }
+    }
+
+    private func refreshSchedule() {
+        if let updated = scheduleVM.schedules.first(where: { $0.id == schedule.id }) {
+            schedule = updated
+        }
     }
 
     // MARK: - 네이버 지도 열기 (앱 → 웹 fallback)

@@ -50,8 +50,14 @@ struct DayDetailView: View {
                 Button { showAddPopover = true } label: { Image(systemName: "plus") }
                 .popover(isPresented: $showAddPopover) {
                     AddPopover(
-                        onScheduleTap: { showAddPopover = false; showScheduleForm = true },
-                        onAccountBookTap: { showAddPopover = false; showAccountBookForm = true }
+                        onScheduleTap: {
+                            showAddPopover = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { showScheduleForm = true }
+                        },
+                        onAccountBookTap: {
+                            showAddPopover = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { showAccountBookForm = true }
+                        }
                     )
                 }
             }

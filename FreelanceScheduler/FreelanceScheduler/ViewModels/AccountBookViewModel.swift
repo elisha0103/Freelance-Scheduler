@@ -1,6 +1,20 @@
 import Foundation
 import Observation
 
+enum ErrorMessageHelper {
+    static func userFriendlyMessage(_ error: Error) -> String {
+        let desc = error.localizedDescription
+        if desc.contains("index") || desc.contains("requires an index") {
+            return "데이터 조회 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+        } else if desc.contains("permission") || desc.contains("Permission") {
+            return "접근 권한이 없습니다. 다시 로그인해주세요."
+        } else if desc.contains("network") || desc.contains("Network") || desc.contains("offline") {
+            return "네트워크 연결을 확인해주세요."
+        }
+        return "오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+    }
+}
+
 @Observable
 final class AccountBookViewModel {
     var accountBooks: [AccountBook] = []
@@ -28,7 +42,7 @@ final class AccountBookViewModel {
         do {
             accountBooks = try await firestoreService.fetchAccountBooks(groupId: groupId)
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -37,7 +51,7 @@ final class AccountBookViewModel {
         do {
             try await firestoreService.saveAccountBook(item)
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -47,7 +61,7 @@ final class AccountBookViewModel {
             try await firestoreService.deleteAccountBook(id: item.id)
             accountBooks.removeAll { $0.id == item.id }
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 

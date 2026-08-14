@@ -39,7 +39,7 @@ final class AuthViewModel {
             currentUser = user
             authState = user.groupId != nil ? .loggedIn : .needsGroup
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -59,7 +59,7 @@ final class AuthViewModel {
                 authState = user.groupId != nil ? .loggedIn : .needsGroup
             }
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -70,7 +70,7 @@ final class AuthViewModel {
             try await FirestoreService.shared.updateUserNickname(userId: userId, nickname: nickname)
             currentUser?.nickname = nickname
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 }

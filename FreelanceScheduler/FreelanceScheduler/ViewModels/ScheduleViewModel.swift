@@ -28,7 +28,7 @@ final class ScheduleViewModel {
                 year: currentYear, month: currentMonth
             )
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -52,7 +52,7 @@ final class ScheduleViewModel {
             try await firestoreService.saveSchedule(schedule)
             NotificationService.scheduleReminder(for: schedule)
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -63,7 +63,7 @@ final class ScheduleViewModel {
             NotificationService.cancelReminder(for: schedule.id)
             schedules.removeAll { $0.id == schedule.id }
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 

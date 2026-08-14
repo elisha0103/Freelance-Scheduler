@@ -21,7 +21,7 @@ final class GroupViewModel {
                 members = try await firestoreService.fetchGroupMembers(memberIds: memberIds)
             }
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -34,7 +34,7 @@ final class GroupViewModel {
             group = newGroup
             return newGroup
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
             return nil
         }
     }
@@ -64,7 +64,7 @@ final class GroupViewModel {
             group = foundGroup
             return true
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
             return false
         }
     }
@@ -81,7 +81,7 @@ final class GroupViewModel {
             self.group = group
             generatedInviteCode = code
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -95,7 +95,7 @@ final class GroupViewModel {
             self.group = group
             members.removeAll { $0.id == userId }
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -108,7 +108,7 @@ final class GroupViewModel {
             try await firestoreService.updateUserGroup(userId: userId, groupId: nil, isLeader: false)
             self.group = nil
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -122,7 +122,7 @@ final class GroupViewModel {
             try await firestoreService.updateUserGroup(userId: newLeaderId, groupId: group.id, isLeader: true)
             self.group = group
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 
@@ -137,7 +137,7 @@ final class GroupViewModel {
             self.group = nil
             members = []
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = ErrorMessageHelper.userFriendlyMessage(error)
         }
     }
 }

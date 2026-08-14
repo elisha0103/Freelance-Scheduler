@@ -1,4 +1,5 @@
 import SwiftUI
+import MapKit
 
 enum ScheduleFormMode {
     case create
@@ -88,7 +89,38 @@ struct ScheduleFormView: View {
                         Text(address.isEmpty ? "장소를 선택하세요" : address)
                             .foregroundStyle(address.isEmpty ? .secondary : .primary).font(.subheadline)
                         Spacer()
+                        if !address.isEmpty {
+                            Button { address = ""; latitude = nil; longitude = nil } label: {
+                                Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                        }
                         Button("검색") { showPlaceSearch = true }.font(.subheadline)
+                    }
+                    if let lat = latitude, let lng = longitude {
+                        Map(initialPosition: .region(MKCoordinateRegion(
+                            center: CLLocationCoordinate2D(latitude: lat, longitude: lng),
+                            span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+                        ))) {
+                            Marker(address, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng))
+                        }
+                        .frame(height: 150)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+
+                        Button {
+                            let name = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                            let appURL = URL(string: "nmap://place?lat=\(lat)&lng=\(lng)&name=\(name)&appname=com.TaeYoungJin.FreelanceScheduler")!
+                            let webURL = URL(string: "https://map.naver.com/v5/search/\(name)?c=\(lng),\(lat),15,0,0,0,dh")!
+                            if UIApplication.shared.canOpenURL(appURL) {
+                                UIApplication.shared.open(appURL)
+                            } else {
+                                UIApplication.shared.open(webURL)
+                            }
+                        } label: {
+                            Label("네이버 지도에서 보기", systemImage: "map")
+                                .font(.subheadline)
+                        }
                     }
                 }
                 Section("금액") {
