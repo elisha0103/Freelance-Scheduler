@@ -13,8 +13,9 @@ enum AccountBookFormMode: Identifiable {
 
 struct AccountBookFormView: View {
     let mode: AccountBookFormMode
-    var initialDate: Date?
-    var onSave: (() async -> Void)?
+    var initialDate: Date? = nil
+    var linkedSchedule: Schedule? = nil
+    var onSave: (() async -> Void)? = nil
 
     @Environment(AuthViewModel.self) var authViewModel
     @Environment(AccountBookViewModel.self) var accountBookVM
@@ -110,7 +111,7 @@ struct AccountBookFormView: View {
                 }
                 if type == .income {
                     Section("관련 마감 일정") {
-                        let unpaidDeadlines = scheduleVM.schedules.filter { $0.category == .deadline && !$0.isPaid }
+                        let unpaidDeadlines = scheduleVM.schedules.filter { ($0.category == .deadline || ($0.deadline != nil && $0.amount != nil)) && !$0.isPaid }
                         if unpaidDeadlines.isEmpty {
                             Text("미입금 마감 일정이 없습니다")
                                 .font(.subheadline).foregroundStyle(.secondary)
@@ -155,6 +156,11 @@ struct AccountBookFormView: View {
             memo = item.memo ?? ""
             if let cat = item.expenseCategory { expenseCategory = cat }
             linkedScheduleId = item.linkedScheduleId
+        } else if let linkedSchedule {
+            title = linkedSchedule.title
+            type = .income
+            if let amount = linkedSchedule.amount { amountText = amount.formatted() }
+            linkedScheduleId = linkedSchedule.id
         } else if let initialDate { date = initialDate }
     }
 
@@ -185,7 +191,16 @@ struct AccountBookFormView: View {
     }
 
     private func deleteAndDismiss() async {
-        if case .edit(let item) = mode { await accountBookVM.deleteAccountBook(item); HapticManager.success(); await onSave?() }
+        if case .edit(let item) = mode {
+            // 연결된 일정의 isPaid를 되돌리기
+            if let scheduleId = item.linkedScheduleId {
+                try? await FirestoreService.shared.updateSchedulePaidStatus(id: scheduleId, isPaid: false)
+                if let index = scheduleVM.schedules.firstIndex(where: { $0.id == scheduleId }) {
+                    scheduleVM.schedules[index].isPaid = false
+                }
+            }
+            await accountBookVM.deleteAccountBook(item); HapticManager.success(); await onSave?()
+        }
         dismiss()
     }
 }

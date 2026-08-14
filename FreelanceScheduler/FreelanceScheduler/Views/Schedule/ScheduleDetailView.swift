@@ -5,11 +5,14 @@ struct ScheduleDetailView: View {
 
     @Environment(AuthViewModel.self) var authViewModel
     @Environment(ScheduleViewModel.self) var scheduleVM
+    @Environment(AccountBookViewModel.self) var accountBookVM
     @Environment(GroupViewModel.self) var groupVM
     @Environment(\.dismiss) private var dismiss
 
     @State private var showEditForm = false
     @State private var showDeleteAlert = false
+    @State private var showPaidActionSheet = false
+    @State private var showAccountBookForm = false
 
     init(schedule: Schedule) {
         _schedule = State(initialValue: schedule)
@@ -63,10 +66,14 @@ struct ScheduleDetailView: View {
             if let amount = schedule.amount {
                 Section { LabeledContent("금액", value: "\(amount.formatted())원") }
             }
-            if schedule.category == .deadline {
+            if schedule.category == .deadline || (schedule.deadline != nil && schedule.amount != nil) {
                 Section("입금 확인") {
                     Button {
-                        Task { await togglePaidStatus() }
+                        if schedule.isPaid {
+                            Task { await togglePaidStatus() }
+                        } else {
+                            showPaidActionSheet = true
+                        }
                     } label: {
                         HStack {
                             Image(systemName: schedule.isPaid ? "checkmark.circle.fill" : "circle")
@@ -122,6 +129,21 @@ struct ScheduleDetailView: View {
             }
             Button("취소", role: .cancel) {}
         } message: { Text("이 일정을 삭제하시겠습니까?") }
+        .confirmationDialog("입금 확인", isPresented: $showPaidActionSheet, titleVisibility: .visible) {
+            Button("입금 확인만") {
+                Task { await togglePaidStatus() }
+            }
+            Button("가계부에 수입 등록") {
+                Task {
+                    await togglePaidStatus()
+                    showAccountBookForm = true
+                }
+            }
+            Button("취소", role: .cancel) {}
+        } message: { Text("입금 완료 처리와 함께 가계부에 수입을 등록하시겠습니까?") }
+        .fullScreenCover(isPresented: $showAccountBookForm) {
+            AccountBookFormView(mode: .create, linkedSchedule: schedule)
+        }
         .onAppear {
             refreshSchedule()
         }

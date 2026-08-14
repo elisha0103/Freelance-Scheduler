@@ -55,6 +55,10 @@ struct ScheduleRow: View {
         schedule.deadline?.isSameDay(as: date) == true && !schedule.startDate.isSameDay(as: date)
     }
 
+    private var showPaidStatus: Bool {
+        schedule.category == .deadline || (schedule.deadline != nil && schedule.amount != nil)
+    }
+
     var body: some View {
         HStack(spacing: 8) {
             RoundedRectangle(cornerRadius: 2)
@@ -69,6 +73,11 @@ struct ScheduleRow: View {
                 }
             }
             Spacer()
+            if showPaidStatus {
+                Image(systemName: schedule.isPaid ? "checkmark.circle.fill" : "circle")
+                    .font(.caption)
+                    .foregroundStyle(schedule.isPaid ? .green : .secondary)
+            }
             if schedule.isGroupSchedule {
                 Image(systemName: "person.2.fill").font(.caption).foregroundStyle(.secondary)
             }
