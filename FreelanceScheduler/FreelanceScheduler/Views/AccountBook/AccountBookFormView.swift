@@ -28,6 +28,7 @@ struct AccountBookFormView: View {
     @State private var useDefaultTax = true
     @State private var customTaxRateText = ""
     @State private var memo = ""
+    @State private var expenseCategory: ExpenseCategory = .other
     @State private var showValidationError = false
     @State private var showDeleteAlert = false
 
@@ -61,6 +62,13 @@ struct AccountBookFormView: View {
                                 Image(systemName: "exclamationmark.circle.fill").foregroundStyle(.red)
                             }
                         }
+                    if type == .expense {
+                        Picker("카테고리", selection: $expenseCategory) {
+                            ForEach(ExpenseCategory.allCases) { cat in
+                                Label(cat.rawValue, systemImage: cat.icon).tag(cat)
+                            }
+                        }
+                    }
                     if type == .income {
                         Toggle("세금", isOn: $hasTax)
                         if hasTax {
@@ -115,6 +123,7 @@ struct AccountBookFormView: View {
             hasTax = item.hasTax
             if let rate = item.taxRate { if rate == 3.3 { useDefaultTax = true } else { useDefaultTax = false; customTaxRateText = String(rate) } }
             memo = item.memo ?? ""
+            if let cat = item.expenseCategory { expenseCategory = cat }
         } else if let initialDate { date = initialDate }
     }
 
@@ -128,13 +137,15 @@ struct AccountBookFormView: View {
             hasTax: hasTax && type == .income, taxRate: hasTax && type == .income ? taxRate : nil,
             taxAmount: hasTax && type == .income ? taxAmount : nil,
             netAmount: hasTax && type == .income ? netAmount : nil,
-            memo: memo.isEmpty ? nil : memo, authorId: user.id, groupId: groupId
+            memo: memo.isEmpty ? nil : memo,
+            expenseCategory: type == .expense ? expenseCategory : nil,
+            authorId: user.id, groupId: groupId
         )
-        await accountBookVM.saveAccountBook(item); await onSave?(); dismiss()
+        await accountBookVM.saveAccountBook(item); HapticManager.success(); await onSave?(); dismiss()
     }
 
     private func deleteAndDismiss() async {
-        if case .edit(let item) = mode { await accountBookVM.deleteAccountBook(item); await onSave?() }
+        if case .edit(let item) = mode { await accountBookVM.deleteAccountBook(item); HapticManager.success(); await onSave?() }
         dismiss()
     }
 }

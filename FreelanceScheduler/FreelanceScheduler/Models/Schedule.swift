@@ -23,6 +23,16 @@ enum ScheduleCategory: String, Codable, CaseIterable, Identifiable {
     static let deadlineHighlightColor = Color(hex: "8B572A")
 }
 
+enum RepeatRule: String, Codable, CaseIterable, Identifiable {
+    case none = "없음"
+    case daily = "매일"
+    case weekly = "매주"
+    case biweekly = "격주"
+    case monthly = "매월"
+
+    var id: String { rawValue }
+}
+
 struct Schedule: Codable, Identifiable, Hashable {
     var id: String
     var title: String
@@ -36,6 +46,10 @@ struct Schedule: Codable, Identifiable, Hashable {
     var amount: Int?
     var companions: [String]
     var description: String?
+    var reminderMinutes: Int?
+    var repeatRule: RepeatRule?
+    var repeatEndDate: Date?
+    var repeatGroupId: String?
     var authorId: String
     var groupId: String
     var createdAt: Date
@@ -53,6 +67,10 @@ struct Schedule: Codable, Identifiable, Hashable {
         amount: Int? = nil,
         companions: [String] = [],
         description: String? = nil,
+        reminderMinutes: Int? = nil,
+        repeatRule: RepeatRule? = nil,
+        repeatEndDate: Date? = nil,
+        repeatGroupId: String? = nil,
         authorId: String,
         groupId: String,
         createdAt: Date = Date()
@@ -69,6 +87,10 @@ struct Schedule: Codable, Identifiable, Hashable {
         self.amount = amount
         self.companions = companions
         self.description = description
+        self.reminderMinutes = reminderMinutes
+        self.repeatRule = repeatRule
+        self.repeatEndDate = repeatEndDate
+        self.repeatGroupId = repeatGroupId
         self.authorId = authorId
         self.groupId = groupId
         self.createdAt = createdAt

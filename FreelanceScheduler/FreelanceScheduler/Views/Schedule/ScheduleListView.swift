@@ -17,6 +17,11 @@ struct ScheduleListView: View {
                                     NavigationLink(value: schedule) {
                                         ScheduleRow(schedule: schedule, date: date)
                                     }
+                                    .swipeActions(edge: .trailing) {
+                                        Button(role: .destructive) {
+                                            Task { await scheduleVM.deleteSchedule(schedule) }
+                                        } label: { Label("삭제", systemImage: "trash") }
+                                    }
                                 }
                             } header: {
                                 Text(date.formattedDate)

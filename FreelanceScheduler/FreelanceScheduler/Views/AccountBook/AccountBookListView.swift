@@ -10,6 +10,11 @@ struct AccountBookListView: View {
             ForEach(accountBookVM.accountBooks) { item in
                 Button { selectedItem = item } label: { AccountBookRow(item: item) }
                     .buttonStyle(.plain)
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            Task { await accountBookVM.deleteAccountBook(item); await reloadAccountBooks() }
+                        } label: { Label("삭제", systemImage: "trash") }
+                    }
             }
         }
         .listStyle(.insetGrouped)

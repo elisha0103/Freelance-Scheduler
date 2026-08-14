@@ -8,7 +8,9 @@ struct GroupManageView: View {
     @State private var showRemoveAlert = false
     @State private var showLeaveAlert = false
     @State private var showDissolveAlert = false
+    @State private var showTransferAlert = false
     @State private var memberToRemove: FSUser?
+    @State private var memberToTransfer: FSUser?
 
     private var isLeader: Bool { authViewModel.currentUser?.isGroupLeader == true }
 
@@ -38,11 +40,20 @@ struct GroupManageView: View {
                         Spacer()
 
                         if isLeader && member.id != authViewModel.currentUser?.id {
-                            Button("추방", role: .destructive) {
-                                memberToRemove = member
-                                showRemoveAlert = true
+                            Menu {
+                                Button("그룹장 위임") {
+                                    memberToTransfer = member
+                                    showTransferAlert = true
+                                }
+                                Button("추방", role: .destructive) {
+                                    memberToRemove = member
+                                    showRemoveAlert = true
+                                }
+                            } label: {
+                                Image(systemName: "ellipsis.circle")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
                             }
-                            .font(.caption)
                         }
                     }
                 }
@@ -85,6 +96,18 @@ struct GroupManageView: View {
             Button("취소", role: .cancel) {}
         } message: {
             Text("그룹을 탈퇴하시겠습니까?")
+        }
+        .alert("그룹장 위임", isPresented: $showTransferAlert) {
+            Button("위임", role: .destructive) {
+                guard let target = memberToTransfer, let currentId = authViewModel.currentUser?.id else { return }
+                Task {
+                    await groupVM.transferLeadership(to: target.id, currentLeaderId: currentId)
+                    await authViewModel.refreshUser()
+                }
+            }
+            Button("취소", role: .cancel) {}
+        } message: {
+            Text("\(memberToTransfer?.nickname ?? "")님에게 그룹장을 위임하시겠습니까?")
         }
         .alert("그룹 폐쇄", isPresented: $showDissolveAlert) {
             Button("폐쇄", role: .destructive) {

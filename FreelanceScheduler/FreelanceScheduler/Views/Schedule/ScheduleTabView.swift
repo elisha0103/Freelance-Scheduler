@@ -4,6 +4,7 @@ struct ScheduleTabView: View {
     @Environment(AuthViewModel.self) var authViewModel
     @Environment(ScheduleViewModel.self) var scheduleVM
     @Environment(AccountBookViewModel.self) var accountBookVM
+    @Environment(GroupViewModel.self) var groupVM
 
     @State private var showListView = false
     @State private var showAddPopover = false
@@ -13,12 +14,25 @@ struct ScheduleTabView: View {
     var body: some View {
         NavigationStack {
             CalendarView()
+                .refreshable { await reloadSchedules() }
                 .navigationTitle("\(String(scheduleVM.currentYear))년 \(scheduleVM.currentMonth)월")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button { showListView = true } label: {
-                            Image(systemName: "list.bullet")
+                        HStack(spacing: 12) {
+                            Button { showListView = true } label: {
+                                Image(systemName: "list.bullet")
+                            }
+                            if groupVM.members.count > 1 {
+                                Menu {
+                                    Button("전체") { scheduleVM.filterAuthorId = nil }
+                                    ForEach(groupVM.members) { member in
+                                        Button(member.nickname) { scheduleVM.filterAuthorId = member.id }
+                                    }
+                                } label: {
+                                    Image(systemName: scheduleVM.filterAuthorId == nil ? "person.2" : "person.fill")
+                                }
+                            }
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {

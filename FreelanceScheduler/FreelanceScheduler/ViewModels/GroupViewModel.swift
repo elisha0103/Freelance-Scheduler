@@ -113,6 +113,20 @@ final class GroupViewModel {
     }
 
     @MainActor
+    func transferLeadership(to newLeaderId: String, currentLeaderId: String) async {
+        guard var group else { return }
+        group.leaderId = newLeaderId
+        do {
+            try await firestoreService.updateGroup(group)
+            try await firestoreService.updateUserGroup(userId: currentLeaderId, groupId: group.id, isLeader: false)
+            try await firestoreService.updateUserGroup(userId: newLeaderId, groupId: group.id, isLeader: true)
+            self.group = group
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    @MainActor
     func dissolveGroup(leaderId: String) async {
         guard let group else { return }
         do {

@@ -102,4 +102,55 @@ final class AccountBookViewModel {
     func accountBooks(for date: Date) -> [AccountBook] {
         accountBooks.filter { $0.date.isSameDay(as: date) }
     }
+
+    // MARK: - 연간 통계
+    func moveStatsYear(by offset: Int) {
+        statsYear += offset
+    }
+
+    struct MonthlyData: Identifiable {
+        let month: Int
+        let income: Int
+        let expense: Int
+        let tax: Int
+        var id: Int { month }
+    }
+
+    var monthlyDataForYear: [MonthlyData] {
+        (1...12).map { month in
+            let books = accountBooks.filter { $0.date.year == statsYear && $0.date.month == month }
+            return MonthlyData(
+                month: month,
+                income: books.filter { $0.type == .income }.reduce(0) { $0 + $1.amount },
+                expense: books.filter { $0.type == .expense }.reduce(0) { $0 + $1.amount },
+                tax: books.filter { $0.hasTax }.reduce(0) { $0 + ($1.taxAmount ?? 0) }
+            )
+        }.filter { $0.income > 0 || $0.expense > 0 || $0.tax > 0 }
+    }
+
+    // MARK: - 카테고리별 지출 집계
+    struct CategoryAmount {
+        let category: ExpenseCategory
+        let amount: Int
+    }
+
+    var expenseByCategoryForStats: [CategoryAmount] {
+        let expenses = statsAccountBooks.filter { $0.type == .expense }
+        return aggregateByCategory(expenses)
+    }
+
+    var expenseByCategoryForYear: [CategoryAmount] {
+        let expenses = accountBooks.filter { $0.type == .expense && $0.date.year == statsYear }
+        return aggregateByCategory(expenses)
+    }
+
+    private func aggregateByCategory(_ items: [AccountBook]) -> [CategoryAmount] {
+        var dict: [ExpenseCategory: Int] = [:]
+        for item in items {
+            let cat = item.expenseCategory ?? .other
+            dict[cat, default: 0] += item.amount
+        }
+        return dict.map { CategoryAmount(category: $0.key, amount: $0.value) }
+            .sorted { $0.amount > $1.amount }
+    }
 }

@@ -23,6 +23,11 @@ struct MainTabView: View {
         .environment(scheduleVM)
         .environment(accountBookVM)
         .environment(groupVM)
+        .errorBanner(message: scheduleVM.errorMessage ?? accountBookVM.errorMessage ?? groupVM.errorMessage) {
+            scheduleVM.errorMessage = nil
+            accountBookVM.errorMessage = nil
+            groupVM.errorMessage = nil
+        }
         .task {
             if let groupId = authViewModel.currentUser?.groupId {
                 await groupVM.loadGroup(groupId: groupId)
@@ -35,5 +40,6 @@ struct MainTabView: View {
         guard let user = authViewModel.currentUser, let groupId = user.groupId else { return }
         await scheduleVM.loadSchedules(groupId: groupId, authorId: user.id)
         await accountBookVM.loadAccountBooks(groupId: groupId)
+        WidgetService.updateWidget(schedules: scheduleVM.schedules, accountBooks: accountBookVM.accountBooks)
     }
 }

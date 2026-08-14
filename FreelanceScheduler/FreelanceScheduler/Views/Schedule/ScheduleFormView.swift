@@ -27,6 +27,10 @@ struct ScheduleFormView: View {
     @State private var amountText = ""
     @State private var selectedCompanions: Set<String> = []
     @State private var descriptionText = ""
+    @State private var hasReminder = false
+    @State private var reminderMinutes = 30
+    @State private var repeatRule: RepeatRule = .none
+    @State private var repeatEndDate = Calendar.current.date(byAdding: .month, value: 3, to: Date()) ?? Date()
     @State private var showPlaceSearch = false
     @State private var showValidationError = false
     @State private var showDeleteAlert = false
@@ -58,6 +62,26 @@ struct ScheduleFormView: View {
                     DatePicker("시작 날짜/시간", selection: $startDate)
                     Toggle("마감일 설정", isOn: $hasDeadline)
                     if hasDeadline { DatePicker("마감일", selection: $deadline) }
+                    Toggle("알림", isOn: $hasReminder)
+                    if hasReminder {
+                        Picker("알림 시간", selection: $reminderMinutes) {
+                            Text("10분 전").tag(10)
+                            Text("30분 전").tag(30)
+                            Text("1시간 전").tag(60)
+                            Text("2시간 전").tag(120)
+                            Text("하루 전").tag(1440)
+                        }
+                    }
+                    if !isEditing {
+                        Picker("반복", selection: $repeatRule) {
+                            ForEach(RepeatRule.allCases) { rule in
+                                Text(rule.rawValue).tag(rule)
+                            }
+                        }
+                        if repeatRule != .none {
+                            DatePicker("반복 종료일", selection: $repeatEndDate, displayedComponents: .date)
+                        }
+                    }
                 }
                 Section("장소") {
                     HStack {
@@ -135,6 +159,7 @@ struct ScheduleFormView: View {
             latitude = schedule.latitude; longitude = schedule.longitude
             amountText = schedule.amount.map { String($0) } ?? ""
             selectedCompanions = Set(schedule.companions); descriptionText = schedule.description ?? ""
+            if let rm = schedule.reminderMinutes { hasReminder = true; reminderMinutes = rm }
         } else if let initialDate { startDate = initialDate }
     }
 
@@ -143,19 +168,65 @@ struct ScheduleFormView: View {
         guard let user = authViewModel.currentUser, let groupId = user.groupId else { return }
         let existingId: String
         if case .edit(let s) = mode { existingId = s.id } else { existingId = UUID().uuidString }
+
+        let rGroupId = repeatRule != .none ? UUID().uuidString : nil
         let schedule = Schedule(
             id: existingId, title: title, category: category, isGroupSchedule: isGroupSchedule,
             startDate: startDate, deadline: hasDeadline ? deadline : nil,
             address: address.isEmpty ? nil : address, latitude: latitude, longitude: longitude,
             amount: Int(amountText), companions: Array(selectedCompanions),
             description: descriptionText.isEmpty ? nil : descriptionText,
+            reminderMinutes: hasReminder ? reminderMinutes : nil,
+            repeatRule: repeatRule != .none ? repeatRule : nil,
+            repeatEndDate: repeatRule != .none ? repeatEndDate : nil,
+            repeatGroupId: rGroupId,
             authorId: user.id, groupId: groupId
         )
-        await scheduleVM.saveSchedule(schedule); await onSave?(); dismiss()
+        await scheduleVM.saveSchedule(schedule)
+
+        // 반복 일정 생성 (신규 등록 시에만)
+        if !isEditing, repeatRule != .none {
+            await createRepeatingSchedules(base: schedule, user: user, groupId: groupId, repeatGroupId: rGroupId)
+        }
+
+        HapticManager.success(); await onSave?(); dismiss()
+    }
+
+    private func createRepeatingSchedules(base: Schedule, user: FSUser, groupId: String, repeatGroupId: String?) async {
+        let calendar = Calendar.current
+        let component: Calendar.Component
+        let interval: Int
+        switch repeatRule {
+        case .daily: component = .day; interval = 1
+        case .weekly: component = .weekOfYear; interval = 1
+        case .biweekly: component = .weekOfYear; interval = 2
+        case .monthly: component = .month; interval = 1
+        case .none: return
+        }
+
+        var nextDate = calendar.date(byAdding: component, value: interval, to: startDate) ?? startDate
+        while nextDate <= repeatEndDate {
+            var nextDeadline: Date?
+            if hasDeadline, let originalDuration = base.deadline?.timeIntervalSince(base.startDate) {
+                nextDeadline = nextDate.addingTimeInterval(originalDuration)
+            }
+            let repeatedSchedule = Schedule(
+                title: title, category: category, isGroupSchedule: isGroupSchedule,
+                startDate: nextDate, deadline: nextDeadline,
+                address: address.isEmpty ? nil : address, latitude: latitude, longitude: longitude,
+                amount: Int(amountText), companions: Array(selectedCompanions),
+                description: descriptionText.isEmpty ? nil : descriptionText,
+                reminderMinutes: hasReminder ? reminderMinutes : nil,
+                repeatRule: repeatRule, repeatEndDate: repeatEndDate, repeatGroupId: repeatGroupId,
+                authorId: user.id, groupId: groupId
+            )
+            await scheduleVM.saveSchedule(repeatedSchedule)
+            nextDate = calendar.date(byAdding: component, value: interval, to: nextDate) ?? repeatEndDate
+        }
     }
 
     private func deleteAndDismiss() async {
-        if case .edit(let s) = mode { await scheduleVM.deleteSchedule(s); await onSave?() }
+        if case .edit(let s) = mode { await scheduleVM.deleteSchedule(s); HapticManager.success(); await onSave?() }
         dismiss()
     }
 }
