@@ -1,0 +1,105 @@
+import Foundation
+import Observation
+
+@Observable
+final class AccountBookViewModel {
+    var accountBooks: [AccountBook] = []
+    var isLoading = false
+    var errorMessage: String?
+    var statsYear: Int
+    var statsMonth: Int
+    var searchText = ""
+    var searchFilter: IncomeExpense?
+    var searchStartDate: Date?
+    var searchEndDate: Date?
+
+    private let firestoreService = FirestoreService.shared
+
+    init() {
+        let now = Date()
+        statsYear = now.year
+        statsMonth = now.month
+    }
+
+    @MainActor
+    func loadAccountBooks(groupId: String) async {
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            accountBooks = try await firestoreService.fetchAccountBooks(groupId: groupId)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    @MainActor
+    func saveAccountBook(_ item: AccountBook) async {
+        do {
+            try await firestoreService.saveAccountBook(item)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    @MainActor
+    func deleteAccountBook(_ item: AccountBook) async {
+        do {
+            try await firestoreService.deleteAccountBook(id: item.id)
+            accountBooks.removeAll { $0.id == item.id }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    var filteredAccountBooks: [AccountBook] {
+        accountBooks.filter { item in
+            if !searchText.isEmpty {
+                let matchTitle = item.title.localizedCaseInsensitiveContains(searchText)
+                let matchMemo = item.memo?.localizedCaseInsensitiveContains(searchText) ?? false
+                if !matchTitle && !matchMemo { return false }
+            }
+            if let filter = searchFilter, item.type != filter { return false }
+            if let start = searchStartDate, item.date < start.startOfDay { return false }
+            if let end = searchEndDate, item.date > Calendar.current.date(byAdding: .day, value: 1, to: end.startOfDay)! { return false }
+            return true
+        }
+    }
+
+    func moveStatsMonth(by offset: Int) {
+        var month = statsMonth + offset
+        var year = statsYear
+        if month > 12 { month = 1; year += 1 }
+        if month < 1 { month = 12; year -= 1 }
+        statsMonth = month
+        statsYear = year
+    }
+
+    func moveStatsToMonth(year: Int, month: Int) {
+        statsYear = year
+        statsMonth = month
+    }
+
+    var statsAccountBooks: [AccountBook] {
+        accountBooks.filter { $0.date.year == statsYear && $0.date.month == statsMonth }
+    }
+
+    var totalIncome: Int {
+        statsAccountBooks.filter { $0.type == .income }.reduce(0) { $0 + $1.amount }
+    }
+
+    var totalExpense: Int {
+        statsAccountBooks.filter { $0.type == .expense }.reduce(0) { $0 + $1.amount }
+    }
+
+    var totalTax: Int {
+        statsAccountBooks.filter { $0.hasTax }.reduce(0) { $0 + ($1.taxAmount ?? 0) }
+    }
+
+    var netProfit: Int {
+        totalIncome - totalExpense - totalTax
+    }
+
+    func accountBooks(for date: Date) -> [AccountBook] {
+        accountBooks.filter { $0.date.isSameDay(as: date) }
+    }
+}
