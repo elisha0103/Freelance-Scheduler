@@ -17,6 +17,7 @@ struct AccountBookTabView: View {
                     AccountBookListView()
                 }
             }
+            .task { await reloadAccountBooks() }
             .refreshable { await reloadAccountBooks() }
             .navigationTitle("가계부").navigationBarTitleDisplayMode(.inline)
             .toolbar {
