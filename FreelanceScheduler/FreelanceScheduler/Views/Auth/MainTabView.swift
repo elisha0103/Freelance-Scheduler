@@ -7,27 +7,27 @@ struct MainTabView: View {
     @State private var groupVM = GroupViewModel()
 
     var body: some View {
-//        TabView {
-//            Tab("일정", systemImage: "calendar") {
+        TabView {
+            Tab("일정", systemImage: "calendar") {
                 ScheduleTabView()
-//            }
+            }
 
-//            Tab("가계부", systemImage: "wonsign.circle") {
-//                AccountBookTabView()
-//            }
-//
-//            Tab("마이페이지", systemImage: "person.circle") {
-//                MyPageTabView()
-//            }
-//        }
+            Tab("가계부", systemImage: "wonsign.circle") {
+                AccountBookTabView()
+            }
+
+            Tab("마이페이지", systemImage: "person.circle") {
+                MyPageTabView()
+            }
+        }
         .environment(scheduleVM)
         .environment(accountBookVM)
         .environment(groupVM)
-//        .errorBanner(message: scheduleVM.errorMessage ?? accountBookVM.errorMessage ?? groupVM.errorMessage) {
-//            scheduleVM.errorMessage = nil
-//            accountBookVM.errorMessage = nil
-//            groupVM.errorMessage = nil
-//        }
+        .errorBanner(message: scheduleVM.errorMessage ?? accountBookVM.errorMessage ?? groupVM.errorMessage) {
+            scheduleVM.errorMessage = nil
+            accountBookVM.errorMessage = nil
+            groupVM.errorMessage = nil
+        }
         .task {
             if let groupId = authViewModel.currentUser?.groupId {
                 await groupVM.loadGroup(groupId: groupId)
