@@ -33,7 +33,7 @@ enum RepeatRule: String, Codable, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-struct Schedule: Codable, Identifiable, Hashable {
+struct Schedule: Identifiable, Hashable, Codable {
     var id: String
     var title: String
     var category: ScheduleCategory
@@ -97,5 +97,29 @@ struct Schedule: Codable, Identifiable, Hashable {
         self.authorId = authorId
         self.groupId = groupId
         self.createdAt = createdAt
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        title = try container.decode(String.self, forKey: .title)
+        category = try container.decodeIfPresent(ScheduleCategory.self, forKey: .category) ?? .other
+        isGroupSchedule = try container.decodeIfPresent(Bool.self, forKey: .isGroupSchedule) ?? false
+        startDate = try container.decode(Date.self, forKey: .startDate)
+        deadline = try container.decodeIfPresent(Date.self, forKey: .deadline)
+        address = try container.decodeIfPresent(String.self, forKey: .address)
+        latitude = try container.decodeIfPresent(Double.self, forKey: .latitude)
+        longitude = try container.decodeIfPresent(Double.self, forKey: .longitude)
+        amount = try container.decodeIfPresent(Int.self, forKey: .amount)
+        companions = try container.decodeIfPresent([String].self, forKey: .companions) ?? []
+        description = try container.decodeIfPresent(String.self, forKey: .description)
+        reminderMinutes = try container.decodeIfPresent(Int.self, forKey: .reminderMinutes)
+        repeatRule = try container.decodeIfPresent(RepeatRule.self, forKey: .repeatRule)
+        repeatEndDate = try container.decodeIfPresent(Date.self, forKey: .repeatEndDate)
+        repeatGroupId = try container.decodeIfPresent(String.self, forKey: .repeatGroupId)
+        isPaid = try container.decodeIfPresent(Bool.self, forKey: .isPaid) ?? false
+        authorId = try container.decode(String.self, forKey: .authorId)
+        groupId = try container.decode(String.self, forKey: .groupId)
+        createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt) ?? Date()
     }
 }
