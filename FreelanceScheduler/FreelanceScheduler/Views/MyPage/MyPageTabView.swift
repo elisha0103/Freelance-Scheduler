@@ -49,8 +49,10 @@ struct MyPageTabView: View {
 
                     if authViewModel.currentUser?.isGroupLeader == true {
                         Button {
-                            Task { await groupVM.generateInviteCode() }
-                            showInviteCode = true
+                            Task {
+                                await groupVM.generateInviteCode()
+                                showInviteCode = true
+                            }
                         } label: {
                             Label("그룹 초대", systemImage: "person.badge.plus")
                         }
