@@ -7,6 +7,7 @@ struct ScheduleTabView: View {
     @Environment(GroupViewModel.self) var groupVM
 
     @State private var showListView = false
+    @State private var showUnpaidList = false
     @State private var showAddPopover = false
     @State private var showScheduleForm = false
     @State private var showAccountBookForm = false
@@ -22,6 +23,9 @@ struct ScheduleTabView: View {
                         HStack(spacing: 12) {
                             Button { showListView = true } label: {
                                 Image(systemName: "list.bullet")
+                            }
+                            Button { showUnpaidList = true } label: {
+                                Image(systemName: "wonsign.circle")
                             }
                             if groupVM.members.count > 1 {
                                 Menu {
@@ -55,6 +59,9 @@ struct ScheduleTabView: View {
                 }
                 .fullScreenCover(isPresented: $showListView) {
                     ScheduleListView()
+                }
+                .fullScreenCover(isPresented: $showUnpaidList) {
+                    UnpaidScheduleListView()
                 }
                 .fullScreenCover(isPresented: $showScheduleForm) {
                     ScheduleFormView(mode: .create) { await reloadSchedules() }

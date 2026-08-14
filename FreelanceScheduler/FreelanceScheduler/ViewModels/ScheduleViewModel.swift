@@ -79,6 +79,12 @@ final class ScheduleViewModel {
         }
     }
 
+    var unpaidSchedules: [Schedule] {
+        filteredSchedules.filter {
+            ($0.category == .deadline || ($0.deadline != nil && $0.amount != nil)) && !$0.isPaid
+        }.sorted { $0.startDate < $1.startDate }
+    }
+
     var datesWithSchedules: [Date] {
         var dateSet = Set<Date>()
         for schedule in filteredSchedules {

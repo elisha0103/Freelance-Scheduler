@@ -134,15 +134,14 @@ struct ScheduleDetailView: View {
                 Task { await togglePaidStatus() }
             }
             Button("가계부에 수입 등록") {
-                Task {
-                    await togglePaidStatus()
-                    showAccountBookForm = true
-                }
+                showAccountBookForm = true
             }
             Button("취소", role: .cancel) {}
-        } message: { Text("입금 완료 처리와 함께 가계부에 수입을 등록하시겠습니까?") }
+        } message: { Text("가계부에 수입을 등록하시겠습니까?") }
         .fullScreenCover(isPresented: $showAccountBookForm) {
-            AccountBookFormView(mode: .create, linkedSchedule: schedule)
+            AccountBookFormView(mode: .create, linkedSchedule: schedule) {
+                refreshSchedule()
+            }
         }
         .onAppear {
             refreshSchedule()
