@@ -1,0 +1,756 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		666F1EC7302DDBC100BA95DB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AA000001302DD7AA00BA95DB /* FirebaseFirestore */; };
+		666F1EC8302DDBC100BA95DB /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AA000002302DD7AA00BA95DB /* KakaoSDKAuth */; };
+		666F1EC9302DDBC100BA95DB /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = AA000003302DD7AA00BA95DB /* KakaoSDKUser */; };
+		666F1ECA302DDBC100BA95DB /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = AA000004302DD7AA00BA95DB /* KakaoSDKCommon */; };
+		666F1F27302E19DA00BA95DB /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F26302E19DA00BA95DB /* FirebaseCore */; };
+		666F1F29302E19DA00BA95DB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F28302E19DA00BA95DB /* FirebaseDatabase */; };
+		666F1F2B302E19DA00BA95DB /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F2A302E19DA00BA95DB /* FirebaseFirestoreCombine-Community */; };
+		666F1F2E302EA58700BA95DB /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F2D302EA58700BA95DB /* NMapsMap */; };
+		666F1F30302EA61100BA95DB /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F2F302EA61100BA95DB /* KakaoSDK */; };
+		666F1F32302EA61100BA95DB /* KakaoSDKCert in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F31302EA61100BA95DB /* KakaoSDKCert */; };
+		666F1F34302EA61100BA95DB /* KakaoSDKCertCore in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F33302EA61100BA95DB /* KakaoSDKCertCore */; };
+		666F1F36302EA61100BA95DB /* KakaoSDKFriend in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F35302EA61100BA95DB /* KakaoSDKFriend */; };
+		666F1F38302EA61100BA95DB /* KakaoSDKFriendCore in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F37302EA61100BA95DB /* KakaoSDKFriendCore */; };
+		666F1F3A302EA61100BA95DB /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F39302EA61100BA95DB /* KakaoSDKShare */; };
+		666F1F3C302EA61100BA95DB /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 666F1F3B302EA61100BA95DB /* KakaoSDKTalk */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		666F1D9C302DD7AA00BA95DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 666F1D84302DD7A900BA95DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 666F1D8B302DD7A900BA95DB;
+			remoteInfo = FreelanceScheduler;
+		};
+		666F1DA6302DD7AA00BA95DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 666F1D84302DD7A900BA95DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 666F1D8B302DD7A900BA95DB;
+			remoteInfo = FreelanceScheduler;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		666F1D8C302DD7A900BA95DB /* FreelanceScheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreelanceScheduler.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		666F1D9B302DD7AA00BA95DB /* FreelanceSchedulerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreelanceSchedulerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		666F1DA5302DD7AA00BA95DB /* FreelanceSchedulerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreelanceSchedulerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		666F1F3E302EA63A00BA95DB /* Exceptions for "FreelanceScheduler" folder in "FreelanceScheduler" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 666F1D8B302DD7A900BA95DB /* FreelanceScheduler */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		666F1D8E302DD7A900BA95DB /* FreelanceScheduler */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				666F1F3E302EA63A00BA95DB /* Exceptions for "FreelanceScheduler" folder in "FreelanceScheduler" target */,
+			);
+			path = FreelanceScheduler;
+			sourceTree = "<group>";
+		};
+		666F1D9E302DD7AA00BA95DB /* FreelanceSchedulerTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FreelanceSchedulerTests;
+			sourceTree = "<group>";
+		};
+		666F1DA8302DD7AA00BA95DB /* FreelanceSchedulerUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FreelanceSchedulerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		666F1D89302DD7A900BA95DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				666F1F29302E19DA00BA95DB /* FirebaseDatabase in Frameworks */,
+				666F1ECA302DDBC100BA95DB /* KakaoSDKCommon in Frameworks */,
+				666F1F27302E19DA00BA95DB /* FirebaseCore in Frameworks */,
+				666F1EC9302DDBC100BA95DB /* KakaoSDKUser in Frameworks */,
+				666F1EC8302DDBC100BA95DB /* KakaoSDKAuth in Frameworks */,
+				666F1F2E302EA58700BA95DB /* NMapsMap in Frameworks */,
+				666F1F38302EA61100BA95DB /* KakaoSDKFriendCore in Frameworks */,
+				666F1F3A302EA61100BA95DB /* KakaoSDKShare in Frameworks */,
+				666F1EC7302DDBC100BA95DB /* FirebaseFirestore in Frameworks */,
+				666F1F2B302E19DA00BA95DB /* FirebaseFirestoreCombine-Community in Frameworks */,
+				666F1F30302EA61100BA95DB /* KakaoSDK in Frameworks */,
+				666F1F34302EA61100BA95DB /* KakaoSDKCertCore in Frameworks */,
+				666F1F3C302EA61100BA95DB /* KakaoSDKTalk in Frameworks */,
+				666F1F32302EA61100BA95DB /* KakaoSDKCert in Frameworks */,
+				666F1F36302EA61100BA95DB /* KakaoSDKFriend in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		666F1D98302DD7AA00BA95DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		666F1DA2302DD7AA00BA95DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		666F1D83302DD7A900BA95DB = {
+			isa = PBXGroup;
+			children = (
+				666F1D8E302DD7A900BA95DB /* FreelanceScheduler */,
+				666F1D9E302DD7AA00BA95DB /* FreelanceSchedulerTests */,
+				666F1DA8302DD7AA00BA95DB /* FreelanceSchedulerUITests */,
+				666F1D8D302DD7A900BA95DB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		666F1D8D302DD7A900BA95DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				666F1D8C302DD7A900BA95DB /* FreelanceScheduler.app */,
+				666F1D9B302DD7AA00BA95DB /* FreelanceSchedulerTests.xctest */,
+				666F1DA5302DD7AA00BA95DB /* FreelanceSchedulerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		666F1D8B302DD7A900BA95DB /* FreelanceScheduler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 666F1DAF302DD7AA00BA95DB /* Build configuration list for PBXNativeTarget "FreelanceScheduler" */;
+			buildPhases = (
+				666F1D88302DD7A900BA95DB /* Sources */,
+				666F1D89302DD7A900BA95DB /* Frameworks */,
+				666F1D8A302DD7A900BA95DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				666F1D8E302DD7A900BA95DB /* FreelanceScheduler */,
+			);
+			name = FreelanceScheduler;
+			packageProductDependencies = (
+				AA000001302DD7AA00BA95DB /* FirebaseFirestore */,
+				AA000002302DD7AA00BA95DB /* KakaoSDKAuth */,
+				AA000003302DD7AA00BA95DB /* KakaoSDKUser */,
+				AA000004302DD7AA00BA95DB /* KakaoSDKCommon */,
+				666F1F26302E19DA00BA95DB /* FirebaseCore */,
+				666F1F28302E19DA00BA95DB /* FirebaseDatabase */,
+				666F1F2A302E19DA00BA95DB /* FirebaseFirestoreCombine-Community */,
+				666F1F2D302EA58700BA95DB /* NMapsMap */,
+				666F1F2F302EA61100BA95DB /* KakaoSDK */,
+				666F1F31302EA61100BA95DB /* KakaoSDKCert */,
+				666F1F33302EA61100BA95DB /* KakaoSDKCertCore */,
+				666F1F35302EA61100BA95DB /* KakaoSDKFriend */,
+				666F1F37302EA61100BA95DB /* KakaoSDKFriendCore */,
+				666F1F39302EA61100BA95DB /* KakaoSDKShare */,
+				666F1F3B302EA61100BA95DB /* KakaoSDKTalk */,
+			);
+			productName = FreelanceScheduler;
+			productReference = 666F1D8C302DD7A900BA95DB /* FreelanceScheduler.app */;
+			productType = "com.apple.product-type.application";
+		};
+		666F1D9A302DD7AA00BA95DB /* FreelanceSchedulerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 666F1DB2302DD7AA00BA95DB /* Build configuration list for PBXNativeTarget "FreelanceSchedulerTests" */;
+			buildPhases = (
+				666F1D97302DD7AA00BA95DB /* Sources */,
+				666F1D98302DD7AA00BA95DB /* Frameworks */,
+				666F1D99302DD7AA00BA95DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				666F1D9D302DD7AA00BA95DB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				666F1D9E302DD7AA00BA95DB /* FreelanceSchedulerTests */,
+			);
+			name = FreelanceSchedulerTests;
+			packageProductDependencies = (
+			);
+			productName = FreelanceSchedulerTests;
+			productReference = 666F1D9B302DD7AA00BA95DB /* FreelanceSchedulerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		666F1DA4302DD7AA00BA95DB /* FreelanceSchedulerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 666F1DB5302DD7AA00BA95DB /* Build configuration list for PBXNativeTarget "FreelanceSchedulerUITests" */;
+			buildPhases = (
+				666F1DA1302DD7AA00BA95DB /* Sources */,
+				666F1DA2302DD7AA00BA95DB /* Frameworks */,
+				666F1DA3302DD7AA00BA95DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				666F1DA7302DD7AA00BA95DB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				666F1DA8302DD7AA00BA95DB /* FreelanceSchedulerUITests */,
+			);
+			name = FreelanceSchedulerUITests;
+			packageProductDependencies = (
+			);
+			productName = FreelanceSchedulerUITests;
+			productReference = 666F1DA5302DD7AA00BA95DB /* FreelanceSchedulerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		666F1D84302DD7A900BA95DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					666F1D8B302DD7A900BA95DB = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+					666F1D9A302DD7AA00BA95DB = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 666F1D8B302DD7A900BA95DB;
+					};
+					666F1DA4302DD7AA00BA95DB = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 666F1D8B302DD7A900BA95DB;
+					};
+				};
+			};
+			buildConfigurationList = 666F1D87302DD7A900BA95DB /* Build configuration list for PBXProject "FreelanceScheduler" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 666F1D83302DD7A900BA95DB;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AA000010302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				666F1F2C302EA58700BA95DB /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 666F1D8D302DD7A900BA95DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				666F1D8B302DD7A900BA95DB /* FreelanceScheduler */,
+				666F1D9A302DD7AA00BA95DB /* FreelanceSchedulerTests */,
+				666F1DA4302DD7AA00BA95DB /* FreelanceSchedulerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		666F1D8A302DD7A900BA95DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		666F1D99302DD7AA00BA95DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		666F1DA3302DD7AA00BA95DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		666F1D88302DD7A900BA95DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		666F1D97302DD7AA00BA95DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		666F1DA1302DD7AA00BA95DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		666F1D9D302DD7AA00BA95DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 666F1D8B302DD7A900BA95DB /* FreelanceScheduler */;
+			targetProxy = 666F1D9C302DD7AA00BA95DB /* PBXContainerItemProxy */;
+		};
+		666F1DA7302DD7AA00BA95DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 666F1D8B302DD7A900BA95DB /* FreelanceScheduler */;
+			targetProxy = 666F1DA6302DD7AA00BA95DB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		666F1DAD302DD7AA00BA95DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = RF42434X35;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		666F1DAE302DD7AA00BA95DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = RF42434X35;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		666F1DB0302DD7AA00BA95DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RF42434X35;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FreelanceScheduler/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TaeYoungJin.FreelanceScheduler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		666F1DB1302DD7AA00BA95DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RF42434X35;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FreelanceScheduler/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TaeYoungJin.FreelanceScheduler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		666F1DB3302DD7AA00BA95DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RF42434X35;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TaeYoungJin.FreelanceSchedulerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreelanceScheduler.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FreelanceScheduler";
+			};
+			name = Debug;
+		};
+		666F1DB4302DD7AA00BA95DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RF42434X35;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TaeYoungJin.FreelanceSchedulerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreelanceScheduler.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FreelanceScheduler";
+			};
+			name = Release;
+		};
+		666F1DB6302DD7AA00BA95DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RF42434X35;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TaeYoungJin.FreelanceSchedulerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FreelanceScheduler;
+			};
+			name = Debug;
+		};
+		666F1DB7302DD7AA00BA95DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RF42434X35;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TaeYoungJin.FreelanceSchedulerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FreelanceScheduler;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		666F1D87302DD7A900BA95DB /* Build configuration list for PBXProject "FreelanceScheduler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				666F1DAD302DD7AA00BA95DB /* Debug */,
+				666F1DAE302DD7AA00BA95DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		666F1DAF302DD7AA00BA95DB /* Build configuration list for PBXNativeTarget "FreelanceScheduler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				666F1DB0302DD7AA00BA95DB /* Debug */,
+				666F1DB1302DD7AA00BA95DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		666F1DB2302DD7AA00BA95DB /* Build configuration list for PBXNativeTarget "FreelanceSchedulerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				666F1DB3302DD7AA00BA95DB /* Debug */,
+				666F1DB4302DD7AA00BA95DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		666F1DB5302DD7AA00BA95DB /* Build configuration list for PBXNativeTarget "FreelanceSchedulerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				666F1DB6302DD7AA00BA95DB /* Debug */,
+				666F1DB7302DD7AA00BA95DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		666F1F2C302EA58700BA95DB /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.23.3;
+			};
+		};
+		AA000010302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+		AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		666F1F26302E19DA00BA95DB /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000010302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		666F1F28302E19DA00BA95DB /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000010302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		666F1F2A302E19DA00BA95DB /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000010302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
+		};
+		666F1F2D302EA58700BA95DB /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 666F1F2C302EA58700BA95DB /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
+			productName = NMapsMap;
+		};
+		666F1F2F302EA61100BA95DB /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
+		666F1F31302EA61100BA95DB /* KakaoSDKCert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCert;
+		};
+		666F1F33302EA61100BA95DB /* KakaoSDKCertCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCertCore;
+		};
+		666F1F35302EA61100BA95DB /* KakaoSDKFriend */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKFriend;
+		};
+		666F1F37302EA61100BA95DB /* KakaoSDKFriendCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKFriendCore;
+		};
+		666F1F39302EA61100BA95DB /* KakaoSDKShare */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKShare;
+		};
+		666F1F3B302EA61100BA95DB /* KakaoSDKTalk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKTalk;
+		};
+		AA000001302DD7AA00BA95DB /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000010302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		AA000002302DD7AA00BA95DB /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		AA000003302DD7AA00BA95DB /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
+		};
+		AA000004302DD7AA00BA95DB /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA000011302DD7AA00BA95DB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 666F1D84302DD7A900BA95DB /* Project object */;
+}
